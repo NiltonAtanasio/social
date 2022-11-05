@@ -1,5 +1,4 @@
-const userService = require('../service/userService')
-const mongoose = require('mongoose')
+import userService from '../service/userService.js'
 
 const create = async (req, res) => {
   try {
@@ -34,7 +33,7 @@ const findAll = async (req, res) => {
     const users = await userService.findAllService()
 
     if (users.lenght === 0) {
-      return res.status(400).send({ message: "There are no registered useres" })
+      return res.status(400).send({ message: "There are no registered users" })
     }
     res.send(users)
   } catch (err) {
@@ -75,7 +74,7 @@ const update = async (req, res) => {
     res.status(500).send({message: err.message})
   }
 }
-module.exports = {
+export default {
   create,
   findAll,
   findById,

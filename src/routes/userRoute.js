@@ -1,10 +1,11 @@
-const route = require('express').Router()
-const userControllers = require('../controllers/userController')
-const { validId, validUser } = require('../middlewares/golbal.middlewares')
+import express from 'express'
+const router = express.Router()
+import userControllers from '../controllers/userController.js'
+import { validId, validUser } from '../middlewares/golbal.middlewares.js'
 
-route.post('/', userControllers.create)
-route.get('/', userControllers.findAll)
-route.get('/:id', validId, validUser, userControllers.findById)
-route.patch('/:id', validId, validUser, userControllers.update)
+router.post('/', userControllers.create)
+router.get('/', userControllers.findAll)
+router.get('/:id', validId, validUser, userControllers.findById)
+router.patch('/:id', validId, validUser, userControllers.update)
 
-module.exports = route
+export default router

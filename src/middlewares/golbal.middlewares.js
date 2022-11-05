@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const userService = require('../service/userService')
+import mongoose from 'mongoose'
+import userService from '../service/userService.js'
 
 const validId = (req, res, next) => {
   try {
@@ -32,7 +32,7 @@ const validUser = async (req, res, next) => {
     res.status(500).send({message: err.message})
   }
 }
-module.exports = {
+export {
   validId,
-  validUser,
+  validUser
 }

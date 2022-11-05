@@ -1,4 +1,4 @@
-const User = require('../models/UserSchema')
+import User from '../models/UserSchema.js'
 
 const createService = (body) => User.create(body)
 
@@ -18,7 +18,7 @@ const updateService = (
   {_id: id},
   {id, name, username, email, password, avatar, background})
 
-module.exports = {
+export default {
   createService,
   findAllService,
   findByIdService,
