@@ -1,4 +1,4 @@
-import User from '../models/UserSchema.js'
+import User from '../models/User.schema.js'
 
 const createService = (body) => User.create(body)
 
