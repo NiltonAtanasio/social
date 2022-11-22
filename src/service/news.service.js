@@ -17,10 +17,13 @@ const searchByTitleService = (title) => News.find({
 
 const byUserService = (id) => News.find({user: id}).sort({ _id: -1 }).populate("user")
 
-const updateService = (id, title, text, banner) => News.findOneAndUpdate(
-  {_id: id}, 
-  { title, text, banner }, 
-  { rawResult: true})
+const updateService = (id, title, text, banner) => 
+  News.findOneAndUpdate(
+    {_id: id}, 
+    { title, text, banner }, 
+    { rawResult: true})
 
-export { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService, byUserService, updateService }
+const eraseService = (id) => News.findByIdAndDelete({ _id: id })
+
+export { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService, byUserService, updateService, eraseService }
 
