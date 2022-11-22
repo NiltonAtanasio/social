@@ -1,4 +1,4 @@
-import { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService, byUserService, updateService, eraseService } from '../service/news.service.js'
+import { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService, byUserService, updateService, eraseService, likeNewsService, deleteLikeNewsService} from '../service/news.service.js'
 
 const create = async (req, res) => {
   try {
@@ -139,8 +139,8 @@ const searchByTitle = async (req, res) => {
     const { title } = req.query
 
     const news = await searchByTitleService(title)
-    
-    if(news.length === 0){
+
+    if (news.length === 0) {
       return res.status(400).send({
         message: "There are no news with this title"
       })
@@ -192,7 +192,7 @@ const byUser = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { title, text, banner } = req.body
-    const { id } = req.params    
+    const { id } = req.params
 
     if (!title && !text && !banner) {
       res.status(400).send({
@@ -201,8 +201,8 @@ const update = async (req, res) => {
     }
 
     const news = await findByIdService(id)
-    
-    if(String(news.user._id) !== req.userId){
+
+    if (String(news.user._id) !== req.userId) {
       return res.status(400).send({
         message: "You didn't update this News"
       })
@@ -225,7 +225,7 @@ const erase = async (req, res) => {
 
     const news = await findByIdService(id)
 
-    if(String(news.user._id) !== req.userId){
+    if (String(news.user._id) !== req.userId) {
       return res.status(400).send({
         message: "You didn't delete this News"
       })
@@ -241,4 +241,27 @@ const erase = async (req, res) => {
 
   }
 }
-export { create, findAll, topNews, findById, searchByTitle, byUser, update, erase }
+
+const likeNews = async (req, res) => {
+  try {
+    const { id } = req.params
+    const userId = req.userId
+
+    const newsLiked = await likeNewsService(id, userId)
+
+    if(!newsLiked){
+      await deleteLikeNewsService(id, userId)
+      return res.status(200).send({
+        message: "Like successfully removed"
+      })
+    }
+
+    res.send({
+      message: "Like done successfully"
+    })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+
+}
+export { create, findAll, topNews, findById, searchByTitle, byUser, update, erase, likeNews }
