@@ -1,4 +1,4 @@
-import { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService } from '../service/news.service.js'
+import { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService, byUserService } from '../service/news.service.js'
 
 const create = async (req, res) => {
   try {
@@ -164,4 +164,28 @@ const searchByTitle = async (req, res) => {
     res.status(500).send({ message: error.message })
   }
 }
-export { create, findAll, topNews, findById, searchByTitle }
+
+const byUser = async (req, res) => {
+  try {
+    const id = req.userId
+    const news = await byUserService(id)
+
+    return res.send({
+      results: news.map(item => ({
+        id: item._id,
+        title: item.title,
+        text: item.text,
+        banner: item.banner,
+        likes: item.likes,
+        comments: item.comments,
+        name: item.user.name,
+        userName: item.user.username,
+        userAvatar: item.user.avatar
+      }))
+    })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+
+  }
+}
+export { create, findAll, topNews, findById, searchByTitle, byUser }
