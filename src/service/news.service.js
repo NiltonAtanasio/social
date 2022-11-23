@@ -35,5 +35,19 @@ const deleteLikeNewsService = (idNews, userId) =>  News.findOneAndUpdate(
   { $pull: {likes: {userId} } } 
 )
 
-export { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService, byUserService, updateService, eraseService, likeNewsService, deleteLikeNewsService}
+const addCommentService = (idNews, comment, userId) => {
+  let idComment = Math.floor(Date.now() * Math.random()).toString(36)
+
+ return News.findByIdAndUpdate(
+  { _id: idNews}, 
+  {$push: 
+    {comments: {idComment, userId, comment, createdAt: new Date()}}})
+}                 
+
+const deleteCommentService = (idNews, idComment, userId) => News.findOneAndUpdate(
+  { _id: idNews}, 
+  {$pull: {comments: {idComment, userId } } } 
+)
+
+export { createService, findAllService, countNews, topNewsService, findByIdService, searchByTitleService, byUserService, updateService, eraseService, likeNewsService, deleteLikeNewsService, addCommentService, deleteCommentService}
 
