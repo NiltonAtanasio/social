@@ -1,7 +1,8 @@
 import { Router } from 'express'
-const router = Router()
 import userControllers from '../controllers/userController.js'
 import { validId, validUser } from '../middlewares/golbal.middlewares.js'
+
+const router = Router()
 
 router.post('/', userControllers.create)
 router.get('/', userControllers.findAll)
