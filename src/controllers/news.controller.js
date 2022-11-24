@@ -11,14 +11,17 @@ const create = async (req, res) => {
       })
     }
 
-    await createService({
+    const { id } = await createService({
       title,
       text,
       banner,
       user: req.userId
     })
 
-    res.status(201)
+    res.status(201).send({
+      message: "Post created successfully!",
+      post: { id, title, banner, text },
+    });
   } catch (error) {
     res.status(500).send({ message: error.message })
   }

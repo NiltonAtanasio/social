@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import userControllers from '../controllers/userController.js'
+import userController from '../controllers/userController.js'
 import { validId, validUser } from '../middlewares/golbal.middlewares.js'
 
 const router = Router()
 
-router.post('/', userControllers.create)
-router.get('/', userControllers.findAll)
-router.get('/:id', validId, validUser, userControllers.findById)
-router.patch('/:id', validId, validUser, userControllers.update)
+router.post("/", userController.create);
+router.get("/", userController.findAll);
+router.get("/:id", validId, validUser, userController.findById);
+router.patch("/:id", validId, validUser, userController.update);
 
 export default router
